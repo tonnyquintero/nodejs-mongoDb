@@ -1,0 +1,19 @@
+{
+  "name": "mongo-course",
+  "version": "1.0.0",
+  "description": "curso de mongo con nodejs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "mongoDb"
+  ],
+  "author": "tonny187",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
