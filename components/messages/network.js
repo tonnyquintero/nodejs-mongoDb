@@ -5,9 +5,14 @@ const controller = require('./controller');
 var app = express();
 
 app.get('/', function (req, res) {
-    console.log(req.headers);
-    //res.send('Lista de mensajes');
-    response.success(req, res, 'Lista de mensajes');
+    const filterMessages = req.query.user || null;
+    controller.getMessages(filterMessages)
+    .then((messageList) => {
+        response.success(req, res, messageList, 200)
+    })
+    .catch(e => {
+        response.error(req, res, 'Unexpected Error', 500, e);
+    })
 });
 
 app.post('/', function (req, res) {
@@ -23,14 +28,25 @@ app.post('/', function (req, res) {
 
 });
 
-app.patch('/', function (req, res) {
-    res.send('Mensaje actualizado');
+app.patch('/:id', function (req, res) {
+
+    controller.updateMessage(req.params.id, req.body.message)
+    .then((data) => {
+        response.success(req, res, data, 200);
+    })
+    .catch(e => {
+        response.error(req, res, 'Error Interno', 500, e)
+    })
 })
 
-app.delete('/', function (req, res) {
-    console.log(req.query);
-    console.log(req.body);
-    res.send('Mensaje ' + req.body.text + ' eliminado correcatamente');
+app.delete('/:id', function (req, res) {
+    controller.deleteMessage(req.params.id)
+    .then(() => {
+        response.success(req, res, `Usuario ${req.params.id} eliminado`, 200)
+    })
+    .catch(e => {
+        response.error(req, res, 'Error interno', 500, e);
+    })
 });
 
 module.exports = app;

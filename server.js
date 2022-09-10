@@ -1,8 +1,12 @@
 const express = require ('express');
 const routes = require('./network/routes')
-
+const db = require('./db')
 const network = require('./components/messages/network');
 
+require('dotenv').config();
+
+db(process.env.DB_CONNECT)
+const port = 3000;
 
 var app = express();
 
@@ -20,5 +24,5 @@ app.use('/app', express.static('public'))
 //     res.send('Hola');
 // })
 
-app.listen(3000)
-console.log('La aplicación esta escuchando en http://localhost:3000');
+app.listen(port)
+console.log(`La aplicación esta escuchando en http://localhost:${port}`);
